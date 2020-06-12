@@ -22,44 +22,44 @@ public class CardDaoImpl implements CardDao {
 	@Override
 	public boolean addToCart(Cart cart) {
 
-		query = "select bookName,price from book22377  where bookId=? ";
-
-		try {
-			ps = con.prepareStatement(query);
-
-			ps.setInt(1, cart.getBookId());
-			rs = ps.executeQuery();
-
-			String name = null;
-			float price1 = 0f;
-
-			if (rs.next()) {
-
-				name = rs.getString(1);
-				price1 = rs.getFloat(2);
+		query="select bookName,Price from book22377 where bookId=?";
+		try // bookId,emailId,bookQuantity-> provided by user
+		{
+			PreparedStatement pr=con.prepareStatement(query);
+			pr.setInt(1,cart.getBookId());
+			ResultSet r=pr.executeQuery();
+			String name=null;
+			float price=0f;
+			if(r.next())
+				
+			{
+				name=r.getString(1);
+				price=r.getFloat(2);
+				
 			}
-
-			float tp = price1 * cart.getQuantity();
-			query = "insert into cart22377(bookId,bookName,price,quantity,totalPrice,emailId) values(?,?,?,?,?,?))";
-			ps = con.prepareStatement(query);
-			ps.setInt(1, cart.getBookId());
-			ps.setString(2, cart.getBookName());
-			ps.setFloat(3, cart.getPrice());
-			ps.setInt(4, cart.getQuantity());
-			ps.setLong(5, cart.getTotalPrice());
-			ps.setString(6, cart.getEmailId());
-
-			ans = ps.executeUpdate();
-			if (ans > 0)
+			float tp=price*cart.getQuantity();
+			query="insert into cart22377(bookId,emailId,bookName,Price,quantity,totalPrice) values(?,?,?,?,?,?)";
+			pr=con.prepareStatement(query);
+			pr.setInt(1, cart.getBookId());
+			pr.setString(2, cart.getEmailId());
+			pr.setString(3,name);
+			pr.setFloat(4, price);
+			pr.setInt(5, cart.getQuantity());
+			pr.setFloat(6, tp);
+			ans=pr.executeUpdate();
+			if(ans > 0)
+			{
 				return true;
+			}
 			else
+			{
 				return false;
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			}
+		}
+		catch(SQLException e)
+		{
 			e.printStackTrace();
 		}
-
 		return false;
 	}
 
@@ -138,6 +138,7 @@ public class CardDaoImpl implements CardDao {
 	public List<Cart> showMyCart(String emailId) {
 		List<Cart> l = new ArrayList<Cart>();
 
+		Cart c = null;
 		query = "select cartId,BookId,bookName,price,quantity,totalPrice,emailId  from cart22377 where emailId=? ";
 
 		try {
@@ -147,7 +148,7 @@ public class CardDaoImpl implements CardDao {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 
-				Cart c = null;
+				c=new Cart();
 				c.setCartId(rs.getInt(1));
 				c.setBookId(rs.getInt(2));
 				c.setBookName(rs.getString(3));

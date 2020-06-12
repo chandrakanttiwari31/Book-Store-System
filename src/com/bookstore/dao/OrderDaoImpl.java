@@ -21,7 +21,7 @@ public class OrderDaoImpl implements OrderDao {
 	@Override
 	public boolean placeOrder(String emailId) {
 
-		query="select sum(totalPrice) from cart22377 where emailId=?";
+		query="select sum(totalPrice) as finalPrice from cart22377 where emailId=?";
 		try
 		{
 			float fp=0.0f;
@@ -35,7 +35,7 @@ public class OrderDaoImpl implements OrderDao {
 			}
 			String date=new Date().toString();
 			
-			query="insert into order22377(emailId,totalBill,orderDate) values(?,?,?)";
+			query="insert into order22377(emailId,totalBill,date) values(?,?,?)";
 			ps=con.prepareStatement(query);
 			ps.setString(1, emailId);
 			ps.setFloat(2, fp);
@@ -145,7 +145,8 @@ public class OrderDaoImpl implements OrderDao {
 	@Override
 	public List<Order> showMyOrder(String emailId) {
   List<Order> l=new ArrayList<Order>();
-		query=" select orderId,emailId,totalBill,date,status where emailId=? ";
+  Order o=null;
+		query=" select orderId,emailId,totalBill,date,status  from order22377  where emailId=? ";
 		
 		try {
 			ps=con.prepareStatement(query);
@@ -156,7 +157,7 @@ public class OrderDaoImpl implements OrderDao {
 			while(rs.next())
 			{
 				
-				Order o=null;
+				 o=new Order();
 				o.setOrderId(rs.getInt(1));
 				o.setEmailId(rs.getString(2));
 				o.setTotalBill(rs.getLong(3));
@@ -179,7 +180,8 @@ public class OrderDaoImpl implements OrderDao {
 	@Override
 	public List<Order> showAllOrder() {
 		List<Order> l=new ArrayList<Order>();
-		query=" select orderId,emailId,totalBill,date,status  ";
+		Order o=null;
+		query=" select orderId,emailId,totalBill,date,status from order22377  ";
 		
 		try {
 			ps=con.prepareStatement(query);
@@ -190,7 +192,7 @@ public class OrderDaoImpl implements OrderDao {
 			while(rs.next())
 			{
 				
-				Order o=null;
+			 o=new Order();
 				o.setOrderId(rs.getInt(1));
 				o.setEmailId(rs.getString(2));
 				o.setTotalBill(rs.getLong(3));

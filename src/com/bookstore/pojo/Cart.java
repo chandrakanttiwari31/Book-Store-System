@@ -1,5 +1,6 @@
 package com.bookstore.pojo;
 
+
 public class Cart {
 
 	
@@ -11,6 +12,12 @@ public class Cart {
 	private int quantity;
 	private long totalPrice;
 	private  String emailId;
+	
+	
+	
+	public Cart() {
+		super();
+	}
 	public Cart(int cartId, int bookId, String bookName, long price, int quantity, long totalPrice, String emailId) {
 		super();
 		this.cartId = cartId;

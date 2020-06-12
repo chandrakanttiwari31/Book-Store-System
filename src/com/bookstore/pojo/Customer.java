@@ -67,4 +67,5 @@ public class Customer {
 
 
 
-//create table customer22377(emailid varchar(250) primary key,name varchar(100) not null,contactNumber bigint not null,address varchar(200) not null,password varchar(255) not null );
+//create table customer22377(emailid varchar(250) primary key,name varchar(100) not null,contactNumber bigint not null,
+//address varchar(200) not null,password varchar(255) not null );

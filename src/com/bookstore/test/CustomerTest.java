@@ -16,7 +16,7 @@ public class CustomerTest {
 		String address;
 		String password;
 
-		Customer c = null;
+		Customer c = new Customer();
 		CustomerDaoImpl cdi = new CustomerDaoImpl();
 
 		boolean result;
